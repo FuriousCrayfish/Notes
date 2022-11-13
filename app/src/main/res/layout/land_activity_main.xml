@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--макет activity main для альбомной ориентации-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <!--фрагмент с выбором заголовков заметок-->
+
+    <FrameLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/fragment_container"
+        />
+
+    <!--фрагмент с содержанием заметок-->
+
+    <FrameLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/note_contents_fragment_text_view"
+        android:background="?android:attr/detailsElementBackground"
+        />
+
+
+    </LinearLayout>

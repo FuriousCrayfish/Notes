@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="notes">
+        <item>Заметка_1</item>
+        <item>Заметка_2</item>
+        <item>Заметка_3</item>
+        <item>Заметка_4</item>
+        <item>Заметка_5</item>
+    </string-array>
+
+    <string-array name="contents">
+        <item>@string/_1</item>
+        <item>@string/_2</item>
+        <item>@string/_3</item>
+        <item>@string/_4</item>
+        <item>@string/_5</item>
+    </string-array>
+
+</resources>
+
+
