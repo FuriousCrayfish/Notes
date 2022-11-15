@@ -57,4 +57,11 @@ public class NoteContentsFragment extends Fragment {
 
     }
 
+    /*public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) requireActivity().getSupportFragmentManager().popBackStack();
+    }*/
+
 }
