@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(checkOrientation());
+        //setContentView(R.layout.activity_main);
 
        /* //создаем фрагмент
         NoteStructureFragment noteStructureFragment = new NoteStructureFragment();
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         // вызываем менеджер франментов
         fragmentTransaction.replace(R.id.fragment_container, noteStructureFragment);
         fragmentTransaction.commit();*/
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        /*if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
                     replace(R.id.fragment_container, new NoteStructureFragment())
                     .commit();
 
-        }
+        }*/
+       if(savedInstanceState == null) getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, new NoteStructureFragment()).commit();
 
     }
 
