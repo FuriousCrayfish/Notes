@@ -3,19 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NoteContentsFragment"
-    android:orientation="vertical"
     android:background="@color/white"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".NoteContentsFragment">
 
     <TextView
-        android:id="@+id/note_contents_fragment"
+        android:id="@+id/note_contents_fragment_2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@+id/note_contents_fragment_text_view"
-        android:contentDescription="note contents"
-        tools:src="@string/_1"
-        />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_textSize"
+        tools:text="Заметка №1" />
+
+    <Button
+        android:id="@+id/note_contents_fragment_button_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Назад"
+        android:textSize="@dimen/title_textSize" />
+
+    <Button
+        android:id="@+id/note_contents_fragment_button_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="remove"
+        android:textSize="@dimen/title_textSize" />
+
+
+    <FrameLayout
+        android:id="@+id/note_contents_fragment_child_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -26,11 +26,12 @@ public class NoteContentsFragmentActivity extends AppCompatActivity {
 
         // Если эта activity запускается первый раз (с каждым новым гербом первый раз),
         // то перенаправим параметр фрагменту и запустим фрагмент
+      /*!*/  Note note = getIntent().getParcelableExtra(ARG_INDEX);//(Note) getIntent().getExtras().getSerializable(ARG_INDEX);
         if(savedInstanceState == null)
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.note_contents_fragment_container, NoteContentsFragment.newInstance(getIntent()
-                            .getExtras().getInt(ARG_INDEX))).commit();
+                    .replace(R.id.note_contents_fragment_container, NoteContentsFragment
+                            .newInstance(note)).commit();
 
     }
 }
