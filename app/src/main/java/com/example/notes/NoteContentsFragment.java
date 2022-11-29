@@ -10,6 +10,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,8 +28,11 @@ public class NoteContentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_note_contents, container, false);
     }
+
+    private TextView textView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -40,9 +46,9 @@ public class NoteContentsFragment extends Fragment {
 
             Note note = arguments.getParcelable(ARG_INDEX);
             //найдем в root нужный нам TextView
-            TextView textNoteContents = view.findViewById(R.id.note_contents_fragment_2);
+            /*TextView textNoteContents*/textView = view.findViewById(R.id.note_contents_fragment_2);
 
-            textNoteContents.setText(note.getNoteName());
+            /*textNoteContents*/textView.setText(note.getNoteName());
 
            getChildFragmentManager().beginTransaction().addToBackStack("")
                     .replace(R.id.note_contents_fragment_child_container, NoteContentsChildFragment.newInstance(note))
@@ -64,6 +70,45 @@ public class NoteContentsFragment extends Fragment {
             }
 
         });
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater){
+
+        inflater.inflate(R.menu.menu_fragment, menu);
+
+        MenuItem itemAbout = menu.findItem(R.id.action_about);
+        if(itemAbout != null){
+            itemAbout.setVisible(false);
+        }
+
+        MenuItem itemSearch = menu.findItem(R.id.action_search);
+        if(itemSearch != null){
+            itemSearch.setVisible(false);
+        }
+
+        MenuItem itemAdd = menu.findItem(R.id.action_add);
+        if(itemAdd != null){
+            itemAdd.setVisible(false);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+
+        if(item.getItemId() == R.id.action_send){
+            textView.setText(R.string.send);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.action_delete){
+            textView.setText(R.string.delete);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 
