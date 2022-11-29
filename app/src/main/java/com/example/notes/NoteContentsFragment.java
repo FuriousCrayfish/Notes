@@ -6,12 +6,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class NoteContentsFragment extends Fragment {
 
@@ -20,9 +27,12 @@ public class NoteContentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_note_contents, container, false);
     }
+
+    private TextView textView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -33,25 +43,82 @@ public class NoteContentsFragment extends Fragment {
         //аргументы могут быть = null, делаем проверку
 
         if (arguments != null) {
-            int index = arguments.getInt(ARG_INDEX);
+
+            Note note = arguments.getParcelable(ARG_INDEX);
             //найдем в root нужный нам TextView
-            TextView textNoteContents = (TextView)view.findViewById(R.id.note_contents_fragment);
-            //получаем из ресурсов массив строк с текстом заметок
-            TypedArray contentStrings = getResources().obtainTypedArray(R.array.contents);
-            Log.e("", getResources().getString(contentStrings.getResourceId(index, 0)));
-            //возьмем нужную строку и отобразим в TextView
-            textNoteContents.setText(contentStrings.getResourceId(index, 0));
-            contentStrings.recycle();
+            /*TextView textNoteContents*/textView = view.findViewById(R.id.note_contents_fragment_2);
+
+            /*textNoteContents*/textView.setText(note.getNoteName());
+
+           getChildFragmentManager().beginTransaction().addToBackStack("")
+                    .replace(R.id.note_contents_fragment_child_container, NoteContentsChildFragment.newInstance(note))
+                    .commit();
         }
+        Button buttonBack = view.findViewById(R.id.note_contents_fragment_button_back);
+
+        buttonBack.setOnClickListener(view1 -> {
+            requireActivity().getSupportFragmentManager().popBackStack();
+        });
+
+        view.findViewById(R.id.note_contents_fragment_button_remove).setOnClickListener(view1 -> {
+
+            final FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            final List<Fragment> fragments = fragmentManager.getFragments();
+            for(Fragment fragment: fragments){
+                if(fragment instanceof NoteContentsFragment && fragment.isVisible())
+                    fragmentManager.beginTransaction().remove(fragment).commit();
+            }
+
+        });
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater){
+
+        inflater.inflate(R.menu.menu_fragment, menu);
+
+        MenuItem itemAbout = menu.findItem(R.id.action_about);
+        if(itemAbout != null){
+            itemAbout.setVisible(false);
+        }
+
+        MenuItem itemSearch = menu.findItem(R.id.action_search);
+        if(itemSearch != null){
+            itemSearch.setVisible(false);
+        }
+
+        MenuItem itemAdd = menu.findItem(R.id.action_add);
+        if(itemAdd != null){
+            itemAdd.setVisible(false);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+
+        if(item.getItemId() == R.id.action_send){
+            textView.setText(R.string.send);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.action_delete){
+            textView.setText(R.string.delete);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
     //рекомендуемый способ создания фрагмента через фабричный метод
-    public static NoteContentsFragment newInstance(int index){
+    public static NoteContentsFragment newInstance(Note note){
 
         NoteContentsFragment noteContentsFragment = new NoteContentsFragment();
         //передача параметров через Bundle
         Bundle args = new Bundle();
-        args.putInt(ARG_INDEX, index);
+        args.putParcelable(ARG_INDEX, note);
         noteContentsFragment.setArguments(args);
         return  noteContentsFragment;
 
