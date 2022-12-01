@@ -6,15 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,20 @@ public class MainActivity extends AppCompatActivity {
                         .add(R.id.fragment_container, new AboutFragment()).commit();
                 return true;
             case R.id.action_exit:
-                finish();
+
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Attention!")
+                        .setMessage("Do you want to close the app?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finish();
+                                    }
+                                }
+                        )
+                        .setNegativeButton("No", null)
+                        .show();
+
                 return true;
 
             case R.id.action_search:
@@ -93,7 +113,21 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.action_drawer_exit:
-                        finish();
+
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Attention!")
+                                .setMessage("Do you want to close the app?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                finish();
+                                            }
+                                        }
+                                )
+                                .setNegativeButton("No", null)
+                                .show();
+
+                        //finish();
                         return true;
 
                     case R.id.action_drawer_search:
@@ -115,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, new AboutFragment()).commit();
     }
 
-    private void openSearchFragment(){
+    private void openSearchFragment() {
 
         getSupportFragmentManager()
                 .beginTransaction()
