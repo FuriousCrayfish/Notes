@@ -26,7 +26,7 @@ public class NoteContentsFragmentActivity extends AppCompatActivity {
 
         // Если эта activity запускается первый раз (с каждым новым гербом первый раз),
         // то перенаправим параметр фрагменту и запустим фрагмент
-      /*!*/  Note note = getIntent().getParcelableExtra(ARG_INDEX);//(Note) getIntent().getExtras().getSerializable(ARG_INDEX);
+      /*!*/  StructureNote note = getIntent().getParcelableExtra(ARG_INDEX);//(Note) getIntent().getExtras().getSerializable(ARG_INDEX);
         if(savedInstanceState == null)
             getSupportFragmentManager()
                     .beginTransaction()

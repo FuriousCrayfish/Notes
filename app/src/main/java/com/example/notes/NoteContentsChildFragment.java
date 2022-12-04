@@ -37,14 +37,8 @@ public class NoteContentsChildFragment extends Fragment {
 
         if (arguments != null) {
 
-            Note note = arguments.getParcelable(ARG_INDEX_CHILD);
-
-            TypedArray contentStrings = getResources().obtainTypedArray(R.array.contents);
-            Log.e("", getString(contentStrings.getResourceId(note.getContentIndex(), 0)));
-            ((TextView) view.findViewById(R.id.note_contents_tv))
-                    .setText(contentStrings.getResourceId(note.getContentIndex(), 0));
-
-            contentStrings.recycle();
+            StructureNote note = arguments.getParcelable(ARG_INDEX_CHILD);
+            note.getContent();
 
             view.findViewById(R.id.note_contents_fragment_child_button_back).setOnClickListener(view1 -> {
 
@@ -54,7 +48,7 @@ public class NoteContentsChildFragment extends Fragment {
         }
     }
 
-    public static NoteContentsChildFragment newInstance(Note note) {
+    public static NoteContentsChildFragment newInstance(StructureNote note) {
 
         NoteContentsChildFragment noteContentsChildFragment = new NoteContentsChildFragment();
         Bundle args = new Bundle();

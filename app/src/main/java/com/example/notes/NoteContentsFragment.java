@@ -2,7 +2,6 @@ package com.example.notes;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -49,14 +45,14 @@ public class NoteContentsFragment extends Fragment {
 
         if (arguments != null) {
 
-            Note note = arguments.getParcelable(ARG_INDEX);
+            StructureNote note = arguments.getParcelable(ARG_INDEX);
             //найдем в root нужный нам TextView
             /*TextView textNoteContents*/
             textView = view.findViewById(R.id.note_contents_fragment_2);
 
             /*textNoteContents*/
-            textView.setText(note.getNoteName());
-
+            //textView.setText(note.getName());
+            textView.setText(note.getContent());
             getChildFragmentManager().beginTransaction().addToBackStack("")
                     .replace(R.id.note_contents_fragment_child_container, NoteContentsChildFragment.newInstance(note))
                     .commit();
@@ -128,7 +124,6 @@ public class NoteContentsFragment extends Fragment {
                     .show();
 
 
-
             return true;
         }
 
@@ -137,7 +132,7 @@ public class NoteContentsFragment extends Fragment {
     }
 
     //рекомендуемый способ создания фрагмента через фабричный метод
-    public static NoteContentsFragment newInstance(Note note) {
+    public static NoteContentsFragment newInstance(StructureNote note) {
 
         NoteContentsFragment noteContentsFragment = new NoteContentsFragment();
         //передача параметров через Bundle

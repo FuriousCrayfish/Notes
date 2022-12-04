@@ -9,17 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.notes.NoteContentsFragment.ARG_INDEX;
 import static com.example.notes.NoteContentsFragment.newInstance;
 
 public class NoteStructureFragment extends Fragment {
+
+    private RecyclerView notesRV;
+    private NotesAdapter adapter;
 
     //при создании фрагмента укажем его макет
 
@@ -34,14 +39,28 @@ public class NoteStructureFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        notesRV = (RecyclerView) view.findViewById(R.id.notes_recycler);
         initList(view);
+
+        adapter.setOnClickListener(new NotesAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(StructureNote note) {
+                //Toast.makeText(getContext(), String.format("%s - %d", "Позиция", position), Toast.LENGTH_SHORT).show();
+                showPortContents(note);
+            }
+
+        });
 
     }
 
     //метод создает список на основе ресурсов, вызывается в методе onViewCreated
     private void initList(View view) {
 
-        LinearLayout layoutView = (LinearLayout) view;
+        adapter = new NotesAdapter(NotesMock.getNotes());
+        notesRV.setAdapter(adapter);
+
+       /* LinearLayout layoutView = (LinearLayout) view;
         String[] notes = getResources().getStringArray(R.array.notes);
 
         for (int i = 0; i < notes.length; i++) {
@@ -57,12 +76,12 @@ public class NoteStructureFragment extends Fragment {
                 showPortContents(new Note(position, currentNote));
             });
 
-        }
+        }*/
 
     }
 
     //показываем содержимое заметки в портретной ориентации
-    private void showPortContents(Note note) {
+    private void showPortContents(StructureNote note) {
         FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager()
                 .beginTransaction();
         fragmentTransaction
